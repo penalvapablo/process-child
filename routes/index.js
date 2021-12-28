@@ -1,21 +1,24 @@
 const productTestController = require('../components/productTest/ProductTestController');
-const loginController = require('../components/login/loginController')
-const isLoggedIn = require('../utils/isLoggedIn')
-
+const UsersRegistro = require('../components/users/UsersRegistro');
+const UsersLogin = require('../components/users/UsersLogin');
+const isLoggedIn = require('../utils/isLoggedIn');
+const authenticateToken = require('../utils/authenticateToken')
 
 module.exports = (app) => {
   productTestController(app);
-  loginController(app)
-  app.get('/', isLoggedIn, (req, res) => {
-    res.render('index', { name: req.session.name});
+  UsersRegistro(app);
+  UsersLogin(app)
+
+  app.get('/', authenticateToken, (req, res) => {
+    // res.render('index', { mail: req.session.mail });
+    res.send('ok')
   });
 
   app.get('/logout', (req, res) => {
-    const name = req.session.name;
-    req.session.destroy();
-    res.render('logout', { name });
+
+    res.render('logout');
   });
-  
+
   app.get('*', (req, res) =>
     res.status(404).json({
       error: -2,

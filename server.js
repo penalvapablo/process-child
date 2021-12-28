@@ -49,7 +49,6 @@ serverRoutes(app);
 
 /* SOCKETS */
 io.on('connection', async (socket) => {
-  console.log('nuevo cliente conectado');
 
   // socket.emit('products', products);
 
