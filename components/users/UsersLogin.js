@@ -2,13 +2,9 @@ const Users = require('./UsersSchema');
 const { Router } = require('express');
 const router = new Router();
 const bcrypt = require('bcrypt');
-const generateToken = require('../../utils/generateToken')
+const generateToken = require('../../utils/generateToken');
 const authenticateToken = require('../../utils/authenticateToken');
 const UsersRegistro = require('./UsersRegistro');
-
-
-
-
 
 module.exports = (app) => {
   app.use('/login', router);
@@ -27,12 +23,11 @@ module.exports = (app) => {
       const user = await Users.find({ mail: mail });
       const confirmPassword = await bcrypt.compare(password, user[0].password);
       if (!confirmPassword) {
-        return res.json({ error: 'credenciales inválidas' });
+        return res.render('login-error');
       }
-      const access_token = generateToken(user)
+      const access_token = generateToken(user);
 
-      res.json({access_token})
-      // res.send('ok')
+      res.json({ access_token })
     } catch (error) {
       console.log(error);
     }
