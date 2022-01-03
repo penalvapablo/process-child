@@ -18,6 +18,9 @@ module.exports = (app) => {
   });
 
   app.get('/', (req,res)=>{
+    if (user === '') {
+      return res.redirect('login')
+    } 
     res.render('index', { mail: user[0].mail })
   })
   app.get('/logout', (req, res) => {
