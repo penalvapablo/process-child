@@ -11,6 +11,10 @@ const normalizar = require('./normalizr');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { mongodb } = require('./config');
+const { yargObj } = require('./utils/yargs')
+
+
+
 
 // Initializations
 const app = express();
@@ -78,8 +82,11 @@ io.on('connection', async (socket) => {
 });
 /* SOCKETS */
 
-const server = httpServer.listen(config.port, () => {
-  console.log(`Servidor inicializado en el puerto ${config.port}.`);
+
+const PORT = yargObj.port
+
+const server = httpServer.listen(PORT, () => {
+  console.log(`Servidor inicializado en el puerto ${PORT}.`);
 });
 
 server.on('error', () => {
